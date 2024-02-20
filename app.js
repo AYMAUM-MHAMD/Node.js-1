@@ -3,7 +3,7 @@ const app = express();
 const port = 3000;
 const mongoose = require("mongoose");
 app.use(express.urlencoded({ extended: true }));
-const MyData = require("./models/myDataSceme");
+const User = require("./models/customerSchema");
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 
@@ -37,6 +37,18 @@ app.get("/user/view.html", (req, res) => {
   res.render("user/view");
 });
 
+app.post("/user/add.html", (req, res) => {
+  const user = new User(req.body);
+  user
+    .save()
+    .then(() => {
+      res.redirect("/user/add.html");
+    })
+    .catch((arr) => {
+      console.log(arr);
+    });
+});
+
 mongoose
   .connect(
     "mongodb+srv://nikada1243:hXES9AuylRh3P66b@cluster0.qwn8pra.mongodb.net/all-data?retryWrites=true&w=majority"
@@ -49,6 +61,3 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
-
-
-  
