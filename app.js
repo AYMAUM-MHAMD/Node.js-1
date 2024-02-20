@@ -22,17 +22,19 @@ liveReloadServer.server.once("connection", () => {
 });
 
 app.get("/", (req, res) => {
-  MyData.find()
-    .then((result) => {
-      res.render("home", { mytitle: "Homeee", arr: result });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  res.render("index", {});
 });
 
-app.get("/index.html", (req, res) => {
-  res.send("<h1>www</h1>");
+app.get("/user/add.html", (req, res) => {
+  res.render("user/add");
+});
+
+app.get("/user/edit.html", (req, res) => {
+  res.render("user/edit");
+});
+
+app.get("/user/view.html", (req, res) => {
+  res.render("user/view");
 });
 
 mongoose
@@ -48,15 +50,5 @@ mongoose
     console.log(err);
   });
 
-app.post("/", (req, res) => {
-  console.log(req.body);
-  const myData = new MyData(req.body);
-  myData
-    .save()
-    .then(() => {
-      res.redirect("/index.html");
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
+
+  
