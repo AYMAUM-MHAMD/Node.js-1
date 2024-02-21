@@ -32,16 +32,23 @@ app.get("/", (req, res) => {
     });
 });
 
+app.get("/user/:id", (req, res) => {
+  User.findById(req.params.id)
+    .then((result) => {
+      res.render("user/view", {obj: result});
+    })
+
+    .catch((arr) => {
+      console.log(arr);
+    });
+});
+
 app.get("/user/add.html", (req, res) => {
   res.render("user/add");
 });
 
 app.get("/user/edit.html", (req, res) => {
   res.render("user/edit");
-});
-
-app.get("/user/view.html", (req, res) => {
-  res.render("user/view");
 });
 
 app.post("/user/add.html", (req, res) => {
