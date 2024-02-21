@@ -22,7 +22,14 @@ liveReloadServer.server.once("connection", () => {
 });
 
 app.get("/", (req, res) => {
-  res.render("index", {});
+  User.find()
+    .then((result) => {
+      res.render("index", { arr: result });
+    })
+
+    .catch((arr) => {
+      console.log(arr);
+    });
 });
 
 app.get("/user/add.html", (req, res) => {
@@ -42,7 +49,7 @@ app.post("/user/add.html", (req, res) => {
   user
     .save()
     .then(() => {
-      res.redirect("/user/add.html");
+      res.redirect("/");
     })
     .catch((arr) => {
       console.log(arr);
