@@ -72,7 +72,10 @@ app.post("/user/add.html", (req, res) => {
 });
 
 app.post("/search", (req, res) => {
-  User.find({ $or: [{ fireName: "" }, { lastName: "" }] })
+  console.log("****************");
+  const SearchText = req.body.searchText.trim();
+
+  User.find({ $or: [{ fireName: SearchText }, { lastName: SearchText }] })
     .then((result) => {
       console.log(result);
       res.render("user/search", { arr: result, moment: moment });
