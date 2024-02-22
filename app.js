@@ -40,7 +40,6 @@ app.get("/user/add.html", (req, res) => {
 });
 
 app.get("/edit/:id", (req, res) => {
-
   User.findById(req.params.id)
     .then((result) => {
       res.render("user/edit", { obj: result, moment: moment });
@@ -49,7 +48,6 @@ app.get("/edit/:id", (req, res) => {
     .catch((arr) => {
       console.log(arr);
     });
-
 });
 
 app.get("/view/:id", (req, res) => {
@@ -64,9 +62,7 @@ app.get("/view/:id", (req, res) => {
 });
 
 app.post("/user/add.html", (req, res) => {
-  const user = new User(req.body);
-  user
-    .save()
+  User.create(req.body)
     .then(() => {
       res.redirect("/");
     })
@@ -76,12 +72,23 @@ app.post("/user/add.html", (req, res) => {
 });
 
 app.delete("/edit/:id", (req, res) => {
-  User.deleteOne({_id: req.params.id})
+  User.deleteOne({ _id: req.params.id })
     .then(() => {
       res.redirect("/");
     })
     .catch((arr) => {
       console.log(arr);
+    });
+});
+
+app.put("/edit/:id", (req, res) => {
+  User.updateOne({ _id: req.params.id }, req.body)
+    .then((result) => {
+      console.log(result);
+      res.redirect("/");
+    })
+    .catch((err) => {
+      console.log(err);
     });
 });
 
