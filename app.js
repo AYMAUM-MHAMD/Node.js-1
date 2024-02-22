@@ -71,6 +71,17 @@ app.post("/user/add.html", (req, res) => {
     });
 });
 
+app.post("/search", (req, res) => {
+  User.find({ $or: [{ fireName: "" }, { lastName: "" }] })
+    .then((result) => {
+      console.log(result);
+      res.render("user/search", { arr: result, moment: moment });
+    })
+    .catch((arr) => {
+      console.log(arr);
+    });
+});
+
 app.delete("/edit/:id", (req, res) => {
   User.deleteOne({ _id: req.params.id })
     .then(() => {
